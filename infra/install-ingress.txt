@@ -1,0 +1,63 @@
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.47.0/deploy/static/provider/cloud/deploy.yaml
+
+-- kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.2.0/aio/deploy/recommended.yaml
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.27.1/deploy/static/provider/cloud-generic.yaml
+
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/aws/deploy.yaml
+
+"thisisunsafe"  
+"thisisunsafe"  
+"thisisunsafe"  
+"thisisunsafe"  
+
+docker pull quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.33.0
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
+
+
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo add stable https://charts.helm.sh/stable
+helm repo update
+helm install nginx-ingress ingress-nginx/ingress-nginx
+
+kubectl get pod -n ingress-nginx
+
+
+
+    "@haticket/common20": "^1.0.6",
+kubectl -n ticket-namespace port-forward example-deploy-5fbf879d4-g2254 5000
+
+
+//get NAME                       TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+kubectl get service ingress-nginx-controller --namespace=ingress-nginx 
+
+
+
+
+//Get NAME                                        READY   STATUS             RESTARTS       AGE   IP           NODE             NOMINATED NODE   READINESS GATES
+kubectl get po -n ingress-nginx  -o wide
+
+
+
+
+
+
+kubectl port-forward --namespace=ingress-nginx service/ingress-nginx-controller 8080:80
+
+// to get  NAME                       TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+kubectl get service ingress-nginx-controller --namespace=ingress-nginx  
+
+    
+    # nginx.ingress.kubernetes.io/use-regex: "true"
+    # # nginx.ingress.kubernetes.io/enable-cors: "true"
+    # nginx.ingress.kubernetes.io/auth-method: "POST"
+    # nginx.ingress.kubernetes.io/service-upstream: "true"
+    # # nginx.ingress.kubernetes.io/auth-url: "http://auth-svc.default.svc.cluster.local/api/auth"
+    # # nginx.ingress.kubernetes.io/auth-response-headers: UserRole
+
+    # # nginx.ingress.kubernetes.io/auth-type: basic
+    # # nginx.ingress.kubernetes.io/auth-secret: htpasswd
+    # # nginx.ingress.kubernetes.io/auth-realm: "123456"

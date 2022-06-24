@@ -1,0 +1,163 @@
+import "../styles/globals.css";
+// import "bootstrap/dist/css/bootstrap.css";
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import builtClient from "../api/built-client";
+import axios from "axios";
+import Header from "../components/header";
+import { useEffect, useState } from "react";
+
+const isServer = () => typeof window === "undefined";
+const getCurrentUser = async (appContext) => {
+  console.log(
+    " Circular structure in 'getInitialProps' result of page 222222222  "
+  );
+
+  const { req } = appContext.ctx;
+  return await axios
+    .get(
+      "http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/users/currentusers",
+      {
+        headers: {
+          ...req.headers,
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH",
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    )
+    // .then((response) => response.data)
+    .catch((err) =>
+      console.log(
+        "&&&&&&&&&&&&&&&&&&&& err &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&",
+        err
+      )
+    );
+};
+
+function AppComponent({ Component, pageProps, currentUser }) {
+  // const [renderPageProps, setRenderPageProps] = useState(pageProps);
+  useEffect(() => {
+    if (pageProps === null) {
+      console.log(
+        " Circular structure in 'getInitialProps' result of page 111111111  "
+      );
+    }
+  }, []);
+
+  return (
+    <div>
+      <Header currentUser={currentUser} />
+      <h1>Header! {currentUser?.email}</h1>
+      <Component {...pageProps} />
+    </div>
+  );
+}
+
+AppComponent.getInitialProps = async (appContext) => {
+  console.log(
+    " Circular structure in 'getInitialProps' result of page 333333333  "
+  );
+
+  let pageProps = {};
+  if (appContext?.Component?.getInitialProps)
+    pageProps = await appContext.Component.getInitialProps(appContext.ctx);
+  if (isServer()) {
+    return {
+      pageProps,
+      posts: await getCurrentUser(appContext),
+    };
+  } else {
+    return {
+      pageProps,
+      currentUser: {},
+    };
+  }
+};
+
+// AppComponent.getInitialProps = async (appContext) => {
+//   console.log(
+//     " typeof window ===  undefined  ------------------------------------------------------------",
+//     appContext.Component
+//   );
+//   const { req } = appContext.ctx;
+//   if (typeof window === "undefined") {
+//     try {
+//       const { data } = await axios
+//         .get(
+//           "http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/users/currentusers",
+//           {
+//             headers: {
+//               ...req.headers,
+//               "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH",
+//               "Content-Type": "application/json;charset=UTF-8",
+//               "Access-Control-Allow-Origin": "*",
+//             },
+//           }
+//         )
+//         .then((response) => response.data)
+//         .catch((err) =>
+//           console.log(
+//             "&&&&&&&&&&&&&&&&&&&& err &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&",
+//             err
+//           )
+//         );
+//       console.log(
+//         "data ------------------------------------------------------------"
+//       );
+//       console.log(
+//         "data ------------------------------------------------------------",
+//         data
+//       );
+
+//       let pageProps = {};
+//       if (appContext?.Component?.getInitialProps)
+//         pageProps = await appContext.Component.getInitialProps(appContext.ctx);
+//       console.log("pageProps --------------------------------", pageProps);
+//       return {
+//         pageProps: { ...pageProps },
+//         ...data,
+//       };
+//     } catch (err) {
+//       console.log(
+//         " Error ======= ------------------------------------------------------------",
+//         err,
+//         " End Error =======  ------------------------------------------------------------"
+//       );
+//     }
+//   } else {
+//     const { data } = await axios.get("/api/users/currentusers");
+//     console.log(
+//       "data 2222222222 ------------------------------------------------------------",
+//       data
+//     );
+//     return data;
+//   }
+//   let pageProps = {};
+//   if (appContext?.Component?.getInitialProps) {
+//     pageProps = await appContext.Component.getInitialProps(appContext.ctx);
+//     return {
+//       pageProps: { ...pageProps },
+//     };
+//   }
+
+//   return {};
+// };
+
+// AppComponent.getInitialProps = async (appContext) => {
+//   const client = builtClient(appContext.ctx);
+//   if (client) {
+//     const { data } = await client.get("/api/users/currentusers");
+//     let pageProps = {};
+//     if (appContext?.Component?.getInitialProps)
+//       pageProps = await appContext.Component.getInitialProps(appContext.ctx);
+//     console.log("pageProps --------------------------------", pageProps);
+//     return {
+//       pageProps,
+//       ...data,
+//     };
+//     // return data;
+//   }
+//   return {};
+// };
+
+export default AppComponent;

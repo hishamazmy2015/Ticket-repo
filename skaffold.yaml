@@ -1,0 +1,28 @@
+apiVersion: skaffold/v2beta28
+
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*.yaml
+
+build:
+  local:
+    push: false
+  artifacts:
+    - image: heshamazmy2015/auth-image
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: heshamazmy2015/client-image
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.ts"
+            dest: .
