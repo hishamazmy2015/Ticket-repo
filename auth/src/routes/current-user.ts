@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
 import express, { Request, Response } from "express";
-import { currentUser } from "../midleware/current-user";
-import { requireAuth } from "../midleware/require-auth";
-// import { currentUser } from "@haticket/common20";
-// import { requireAuth } from "@haticket/common20";
+// import { currentUser } from "../midleware/current-user";
+// import { requireAuth } from "../midleware/require-auth";
+import { currentUser } from "@haticket/common20";
+import { requireAuth } from "@haticket/common20";
 
 const router = express.Router();
 

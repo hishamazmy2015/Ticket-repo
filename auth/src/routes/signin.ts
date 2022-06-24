@@ -3,9 +3,9 @@ import { body } from "express-validator";
 import jwt from "jsonwebtoken";
 import { Password } from "./../services/password";
 
-import { BadRequestError } from "../errors/bad-request-error";
-import { validateRequest } from "../midleware/validate-request";
-// import { BadRequestError, validateRequest } from "@haticket/common20";
+// import { BadRequestError } from "../errors/bad-request-error";
+// import { validateRequest } from "../midleware/validate-request";
+import { BadRequestError, validateRequest } from "@haticket/common20";
 
 import { User } from "../models/user";
 

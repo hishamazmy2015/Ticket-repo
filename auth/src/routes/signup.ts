@@ -2,14 +2,15 @@ import express, { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 // var jwt = require('jsonwebtoken');
 
-// import { BadRequestError, validateRequest } from "@haticket/common20";
+import { BadRequestError, validateRequest } from "@haticket/common20";
 import { body } from "express-validator";
 
 // import { DatabaseConnectionError } from "../errors/database-connection-error";
 // import { RequestValidationError } from "../errors/request-validation-error";
 import { User } from "../models/user";
-import { validateRequest } from "../midleware/validate-request";
-import { BadRequestError } from "../errors/bad-request-error";
+// import { validateRequest } from "../midleware/validate-request";
+// import { BadRequestError } from "../errors/bad-request-error";
+
 // import jwt from "jsonwebtoken";
 // import { BadRequestError } from "../errors/bad-request-error";
 // import { validateRequest } from "../midleware/validate-request";
