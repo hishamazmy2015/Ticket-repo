@@ -13,6 +13,16 @@ common/package-lock.json
 common/build
 common/yarn.lock
 
+nats-test/node_modules
+nats-test/package-lock.json
+nats-test/build
+nats-test/yarn.lock
+
+ticket/node_modules
+ticket/package-lock.json
+ticket/build
+ticket/yarn.lock
+
 kubernates
 ingress-nginx
 ingress-nginx
