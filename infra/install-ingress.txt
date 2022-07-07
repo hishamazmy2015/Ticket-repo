@@ -61,3 +61,48 @@ kubectl get service ingress-nginx-controller --namespace=ingress-nginx
     # # nginx.ingress.kubernetes.io/auth-type: basic
     # # nginx.ingress.kubernetes.io/auth-secret: htpasswd
     # # nginx.ingress.kubernetes.io/auth-realm: "123456"
+
+
+
+npm i -D @types/jest ts-jest jest
+npm i -D @types/jest ts-jest jest
+npm i -D @types/jest ts-jest jest
+
+
+
+    kubectl port-forward nats-depl-c456d778c-wt9w5 4222:4222
+
+    localhost:8222/streaming
+
+kubectl get ingress
+
+
+
+
+
+
+#############################################################################
+kubectl logs  -n ingress-nginx  ingress-nginx-controller-5849c9f946-4q5dt
+
+
+kubectl get configmaps -n ingress-nginx
+# check controller is runnig or not 
+# NAME                              DATA   AGE
+# ingress-controller-leader         0      59d
+# ingress-controller-leader-nginx   0      58d
+# ingress-nginx-controller          0      59d
+# kube-root-ca.crt                  1      59d
+
+
+$ kubectl get pods -n <namespace-of-ingress-controller>
+NAME                                        READY     STATUS    RESTARTS   AGE
+ingress-nginx-controller-67956bf89d-fv58j   1/1       Running   0          1m
+
+$ kubectl logs -n <namespace> ingress-nginx-controller-67956bf89d-fv58j
+-------------------------------------------------------------------------------
+NGINX Ingress controller
+  Release:    0.14.0
+  Build:      git-734361d
+  Repository: https://github.com/kubernetes/ingress-nginx
+-------------------------------------------------------------------------------
+....
