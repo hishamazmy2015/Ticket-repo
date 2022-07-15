@@ -28,7 +28,15 @@ spec:
               service:
                 name: ticket-srv
                 port:
-                  number: 4003      
+                  number: 4003     
+                  
+          - path: /api/tickets/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: ticket-srv
+                port:
+                  number: 4003    
 
           - path: /?(.*)
             pathType: Prefix

@@ -34,3 +34,12 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
+
+    - image: heshamazmy2015/order-image
+      context: order
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .

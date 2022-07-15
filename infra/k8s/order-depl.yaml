@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: ticket-depl
+  name: order-depl
 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ticket
+      app: order
   template:
     metadata:
       labels:
-        app: ticket
+        app: order
     spec:
       containers:
-        - name: ticket
-          image: heshamazmy2015/ticket-image
+        - name: order
+          image: heshamazmy2015/order-image
           env:
             - name: NATS_CLIENT_ID
               valueFrom:
@@ -29,7 +29,7 @@ spec:
               value: ticketing
 
             - name: MONGO_URI
-              value: mongodb://ticket-mongo-srv:27017/ticket
+              value: mongodb://order-mongo-srv:27017/order
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
@@ -40,13 +40,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ticket-srv
+  name: order-srv
 
 spec:
   selector:
-    app: ticket
+    app: order
   ports:
-    - name: ticket
+    - name: order
       protocol: TCP
-      port: 4003
-      targetPort: 4003
+      port: 4004
+      targetPort: 4004
