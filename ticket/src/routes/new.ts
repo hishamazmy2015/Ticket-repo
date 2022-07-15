@@ -32,6 +32,7 @@ router.post(
       price: ticket.price,
       userId: ticket.userId,
       title: ticket.title,
+      version: ticket.version,
     });
 
     res.status(201).send(ticket);

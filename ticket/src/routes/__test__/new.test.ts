@@ -1,7 +1,7 @@
 import request from "supertest";
 import { app } from "../../app";
 import { Ticket } from "../../models/ticket";
-import { natsWrapper } from '../../nats-wrapper';
+import { natsWrapper } from "../../nats-wrapper";
 
 // import * as MockDatabase from "../../__mocks__/nats-wrapper";
 // jest.enableAutomock();
@@ -77,15 +77,11 @@ it("returns an error if an invalid price is provided  ", async () => {
 });
 
 it("create a ticket with valid inputs ", async () => {
-  // jest.mock("nats-wrapper");
-  // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-
-//   jest.mock('../../nats-wrapper', () => ({
-//     isEnabled: () => true
-// }));
-//   // jest.mock("../../nats-wrapper");
-//   jest.mock('../../nats-wrapper', () => jest.fn())
-
+  //   jest.mock('../../nats-wrapper', () => ({
+  //     isEnabled: () => true
+  // }));
+  //   // jest.mock("../../nats-wrapper");
+  //   jest.mock('../../nats-wrapper', () => jest.fn())
 
   let tickts = await Ticket.find({});
   expect(tickts.length).toEqual(0);
@@ -101,4 +97,18 @@ it("create a ticket with valid inputs ", async () => {
   tickts = await Ticket.find({});
   expect(tickts.length).toEqual(1);
   expect(tickts[0].price).toEqual(20);
+});
+
+it("publish an event ", async () => {
+  const title = "123";
+  await request(app)
+    .post("/api/tickets")
+    .set("Cookie", global.signin())
+    .send({
+      title: "fdkfk",
+      price: 20,
+    })
+    .expect(201);
+  console.log("NatsWrapper ", natsWrapper);
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

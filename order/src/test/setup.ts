@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
-import { app } from "../app";
-import { MongoMemoryServer } from "mongodb-memory-server";
-import request from "supertest";
 import jwt from "jsonwebtoken";
+import { MongoMemoryServer } from "mongodb-memory-server";
+import mongoose from "mongoose";
+import request from "supertest";
+import { app } from "../app";
 let mongo: any;
 
 declare global {

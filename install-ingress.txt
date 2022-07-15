@@ -27,7 +27,6 @@ kubectl get pod -n ingress-nginx
 
 
 
-    "@haticket/common20": "^1.0.6",
 kubectl -n ticket-namespace port-forward example-deploy-5fbf879d4-g2254 5000
 
 
@@ -68,18 +67,12 @@ npm i -D @types/jest ts-jest jest
 npm i -D @types/jest ts-jest jest
 npm i -D @types/jest ts-jest jest
 
-npm i @haticket/common20
-npm i @haticket/common20
-npm i @haticket/common20
-
     kubectl port-forward nats-depl-c456d778c-wt9w5 4222:4222
+    kubectl exec -it ticket-monog-dpl-7f748c47b7-xbk9h mongo
 
     localhost:8222/streaming
 
 kubectl get ingress
-
-
-
 
 
 

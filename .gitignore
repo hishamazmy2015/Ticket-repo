@@ -13,6 +13,11 @@ common/package-lock.json
 common/build
 common/yarn.lock
 
+order/node_modules
+order/package-lock.json
+order/build
+order/yarn.lock
+
 nats-test/node_modules
 nats-test/package-lock.json
 nats-test/build

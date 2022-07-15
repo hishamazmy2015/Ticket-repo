@@ -13,10 +13,7 @@ export abstract class Publisher<T extends Event> {
   }
   publish(data: T["data"]): Promise<void> {
     return new Promise((resolve, reject) => {
-      console.log(
-        "------------------------ JSON.stringify(data) ------------------------ ",
-        typeof data
-      );
+  
       this.client.publish(
         this.subject,
         typeof data === "string" ? JSON.parse(data) : JSON.stringify(data),

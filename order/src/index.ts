@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import { app } from "./app";
+import { TicketCreatedListener } from "./events/listeners/ticket-created-listener";
+import { TicketUpdatedListener } from "./events/listeners/ticket-updated-listener";
 import { natsWrapper } from "./nats-wrapper";
 
 const start = async () => {
@@ -26,22 +28,30 @@ const start = async () => {
       process.env.NATS_CLIENT_ID,
       process.env.NATS_URL
     );
-    await natsWrapper.connect("ticketing", "lassfes", "http://nats-srv:4222");
+    // await natsWrapper.connect(
+    //   process.env.NATS_CLUSTER_ID,
+    //   process.env.NATS_CLIENT_ID,
+    //   process.env.NATS_URL
+    // );
+
     natsWrapper.client.on("close", () => {
       console.log("NATS connections closed");
       process.exit();
     });
     process.on("SIGINT", () => natsWrapper.client.close);
     process.on("SIGTERM", () => natsWrapper.client.close);
-    mongoose.connect(process.env.MONGO_URI);
+
+    new TicketCreatedListener(natsWrapper.client).listen();
+    new TicketUpdatedListener(natsWrapper.client).listen();
+
+    await mongoose.connect(process.env.MONGO_URI); 
     // await mongoose.connect(process.env.MONGO_URI);
-    console.log("Connected To Mongo For Ticket DB");
+    console.log("Connected To Mongo For Order DB");
   } catch (err) {
     console.log("err", err);
   }
-  app.listen(4003, () => {
-    console.log("====================== Listening TICKET SRV on Port 4003 ====================== ");
-
+  app.listen(4004, () => {
+    console.log("====================== Listening ORDER SRV on Port 4004 ====================== ");
   });
 };
 start();

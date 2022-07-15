@@ -21,10 +21,6 @@ router.put(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    console.log(
-      " ------------------------------------------------------------------  ",
-      req.params.id
-    );
     const ticket = await Ticket.findById(req.params.id);
     if (!ticket) throw new NotFoundError();
     if (ticket.userId !== req.currentUser!.id) throw new NotAuthorizedError();
@@ -33,11 +29,13 @@ router.put(
       price: req.body.price,
     });
     await ticket.save();
-   await new TicketUpdatedPublisher(natsWrapper.client).publish({
+    
+    await new TicketUpdatedPublisher(natsWrapper.client).publish({
       id: ticket.id,
       title: ticket.title,
       price: ticket.price,
       userId: ticket.userId,
+      version: ticket.version,
     });
     res.send(ticket);
   }
