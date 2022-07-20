@@ -1,6 +1,9 @@
 "thisisunsafe"  
 
-yarn add @haticket/common20@1.0.1@latest
+yarn add @haticket/common20@latest
+yarn add @haticket/common20@latest
+yarn add @haticket/common20@latest
+
 
 kubectl get pod -n ingress-nginx
 
@@ -11,10 +14,6 @@ npm i @haticket/common20
 npm i @haticket/common20
 
 kubectl -n ticket-namespace port-forward example-deploy-5fbf879d4-g2254 5000
-
-
-
-npm i -D @types/jest ts-jest jest
 
 
     kubectl port-forward nats-depl-c456d778c-wt9w5 4222:4222
@@ -31,3 +30,4 @@ NGINX Ingress controller
   Build:      git-734361d
   Repository: https://github.com/kubernetes/ingress-nginx
 -------------------------------------------------------------------------------
+npm i -D @types/jest ts-jest jest

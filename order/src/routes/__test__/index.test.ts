@@ -23,7 +23,6 @@ it("fetch orders for an particular user ", async () => {
   const user2 = global.signin();
   const user3 = global.signin();
 
-  console.log("req.currentUser!.id >>>>>>>>>>>>>>>>", user2);
 
   const { body: orderOne } = await request(app)
     .post("/api/orders")

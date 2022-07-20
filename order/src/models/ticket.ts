@@ -44,7 +44,7 @@ const ticketSchema = new mongoose.Schema(
     },
   }
 );
-ticketSchema.set("versionKey", "version");
+ticketSchema.set('versionKey', 'version');
 ticketSchema.plugin(updateIfCurrentPlugin);
 // ticketSchema.pre("save", function (done) {
 //   // @ts-ignore
@@ -74,7 +74,7 @@ ticketSchema.statics.build = (att: TicketAttrs) => {
 ticketSchema.methods.isReserved = async function () {
   // This === the ticket doc that we just called 'isReserved' on
 
-  return await Order.findOne({
+  const existingOrder = await Order.findOne({
     ticket: this,
     status: {
       $in: [
@@ -84,6 +84,8 @@ ticketSchema.methods.isReserved = async function () {
       ],
     },
   });
+  return !!existingOrder;
+
 };
 
 const Ticket = mongoose.model<TicketDocs, TicketModel>("Ticket", ticketSchema);

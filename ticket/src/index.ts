@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import { app } from "./app";
+import { OrderCancelledListener } from "./events/listener/order-cancelled-listener";
+import { OrderCreatedListener } from "./events/listener/order-created-listener";
 import { natsWrapper } from "./nats-wrapper";
 
 const start = async () => {
@@ -33,6 +35,10 @@ const start = async () => {
     });
     process.on("SIGINT", () => natsWrapper.client.close);
     process.on("SIGTERM", () => natsWrapper.client.close);
+
+    new OrderCreatedListener(natsWrapper.client).listen();
+    new OrderCancelledListener(natsWrapper.client).listen();
+
     mongoose.connect(process.env.MONGO_URI);
     // await mongoose.connect(process.env.MONGO_URI);
     console.log("Connected To Mongo For Ticket DB");
@@ -40,8 +46,9 @@ const start = async () => {
     console.log("err", err);
   }
   app.listen(4003, () => {
-    console.log("====================== Listening TICKET SRV on Port 4003 ====================== ");
-
+    console.log(
+      "====================== Listening TICKET SRV on Port 4003 ====================== "
+    );
   });
 };
 start();

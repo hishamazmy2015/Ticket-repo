@@ -1,5 +1,6 @@
 import { natsWrapper } from "./../nats-wrapper";
 import {
+  BadRequestError,
   NotAuthorizedError,
   NotFoundError,
   requireAuth,
@@ -24,12 +25,15 @@ router.put(
     const ticket = await Ticket.findById(req.params.id);
     if (!ticket) throw new NotFoundError();
     if (ticket.userId !== req.currentUser!.id) throw new NotAuthorizedError();
+    if (ticket.orderId) {
+      throw new BadRequestError("Cannot edit a reserved ticket");
+    }
     ticket.set({
       title: req.body.title,
       price: req.body.price,
     });
     await ticket.save();
-    
+
     await new TicketUpdatedPublisher(natsWrapper.client).publish({
       id: ticket.id,
       title: ticket.title,

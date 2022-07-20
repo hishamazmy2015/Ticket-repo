@@ -18,6 +18,13 @@ order/package-lock.json
 order/build
 order/yarn.lock
 
+
+expiration/node_modules
+expiration/package-lock.json
+expiration/build
+expiration/yarn.lock
+
+
 nats-test/node_modules
 nats-test/package-lock.json
 nats-test/build

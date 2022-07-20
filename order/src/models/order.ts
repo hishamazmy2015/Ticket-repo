@@ -2,6 +2,7 @@ import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 import mongoose from "mongoose";
 import { OrderStatus } from "@haticket/common20";
 import { TicketDocs } from "./ticket";
+// import { TicketDocs } from "./ticket";
 
 export { OrderStatus };
 interface orderAttrs {
@@ -37,12 +38,10 @@ const orderSchema = new mongoose.Schema(
     },
     expireAt: {
       type: mongoose.Schema.Types.Date,
-      required: true,
     },
     ticket: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Ticket",
-      required: true,
     },
   },
   {
