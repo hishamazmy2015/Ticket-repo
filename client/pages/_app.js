@@ -1,7 +1,4 @@
 import "../styles/globals.css";
-// import "bootstrap/dist/css/bootstrap.css";
-// import 'bootstrap/dist/css/bootstrap.min.css';
-import builtClient from "../api/built-client";
 import axios from "axios";
 import Header from "../components/header";
 function AppComponent({ Component, pageProps, currentUser }) {

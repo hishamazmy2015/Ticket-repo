@@ -19,6 +19,12 @@ order/build
 order/yarn.lock
 
 
+payment/node_modules
+payment/package-lock.json
+payment/build
+payment/yarn.lock
+
+
 expiration/node_modules
 expiration/package-lock.json
 expiration/build

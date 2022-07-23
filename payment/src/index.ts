@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 import { app } from "./app";
-import { ExpirationCompleteListener } from "./events/listeners/expiration-complete-listener";
-import { TicketCreatedListener } from "./events/listeners/ticket-created-listener";
-import { TicketUpdatedListener } from "./events/listeners/ticket-updated-listener";
+// import { OrderCancelledListener } from "./events/listener/order-cancelled-listener";
+// import { OrderCreatedListener } from "./events/listener/order-created-listener";
 import { natsWrapper } from "./nats-wrapper";
 
 const start = async () => {
@@ -29,12 +28,7 @@ const start = async () => {
       process.env.NATS_CLIENT_ID,
       process.env.NATS_URL
     );
-    // await natsWrapper.connect(
-    //   process.env.NATS_CLUSTER_ID,
-    //   process.env.NATS_CLIENT_ID,
-    //   process.env.NATS_URL
-    // );
-
+    await natsWrapper.connect("ticketing", "lassfes", "http://nats-srv:4222");
     natsWrapper.client.on("close", () => {
       console.log("NATS connections closed");
       process.exit();
@@ -42,19 +36,18 @@ const start = async () => {
     process.on("SIGINT", () => natsWrapper.client.close);
     process.on("SIGTERM", () => natsWrapper.client.close);
 
-    new TicketCreatedListener(natsWrapper.client).listen();
-    new TicketUpdatedListener(natsWrapper.client).listen();
-    new ExpirationCompleteListener(natsWrapper.client).listen();
+    // new OrderCreatedListener(natsWrapper.client).listen();
+    // new OrderCancelledListener(natsWrapper.client).listen();
 
-    await mongoose.connect(process.env.MONGO_URI);
+    mongoose.connect(process.env.MONGO_URI);
     // await mongoose.connect(process.env.MONGO_URI);
-    console.log("Connected To Mongo For Order DB");
+    console.log("Connected To Mongo For Ticket DB");
   } catch (err) {
     console.log("err", err);
   }
   app.listen(4003, () => {
     console.log(
-      "====================== Listening ORDER SRV on Port 4003 ====================== "
+      "====================== Listening TICKET SRV on Port 4003 ====================== "
     );
   });
 };

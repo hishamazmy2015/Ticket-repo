@@ -1,11 +1,16 @@
 "thisisunsafe"  
 
 yarn add @haticket/common20@latest
+
 yarn add @haticket/common20@latest
 yarn add @haticket/common20@latest
 
 
 kubectl get pod -n ingress-nginx
+kubectl describe service [service-name] -n [namespace-name]
+kubectl describe service service_name -n your_namespace
+kubectl logs -n <namespace> <Ingress_nginx_controller_pod_name>
+
 
 yarn add @haticket/common20@1.0.15@latest
 
@@ -15,14 +20,12 @@ npm i @haticket/common20
 
 kubectl -n ticket-namespace port-forward example-deploy-5fbf879d4-g2254 5000
 
-
     kubectl port-forward nats-depl-c456d778c-wt9w5 4222:4222
     kubectl exec -it ticket-monog-dpl-7f748c47b7-xbk9h mongo
 
     localhost:8222/streaming
 
 kubectl get ingress
-
 
 -------------------------------------------------------------------------------
 NGINX Ingress controller
@@ -31,3 +34,6 @@ NGINX Ingress controller
   Repository: https://github.com/kubernetes/ingress-nginx
 -------------------------------------------------------------------------------
 npm i -D @types/jest ts-jest jest
+
+
+kubectl get all

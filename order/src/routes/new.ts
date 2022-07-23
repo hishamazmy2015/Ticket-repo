@@ -27,6 +27,7 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
+    console.log("======================= init =======================");
     // Find the ticket the user is trying to order in the DB
     const { ticketId } = req.body;
     const ticket = await Ticket.findById(ticketId);
@@ -57,7 +58,7 @@ router.post(
       status: OrderStatus.Created,
       expireAt: expireDate,
       ticket: ticket,
-    });  
+    });
     await order.save();
 
     // Publish an event saying that an order was created
