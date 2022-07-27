@@ -28,7 +28,7 @@ const start = async () => {
       process.env.NATS_CLIENT_ID,
       process.env.NATS_URL
     );
-    await natsWrapper.connect("ticketing", "lassfes", "http://nats-srv:4222");
+    // await natsWrapper.connect("ticketing", "lassfes", "http://nats-srv:4222");
     natsWrapper.client.on("close", () => {
       console.log("NATS connections closed");
       process.exit();

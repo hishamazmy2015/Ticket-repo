@@ -3,6 +3,7 @@ import { json } from "body-parser";
 import express from "express";
 import "express-async-errors";
 import cookieSession from "cookie-session";
+import { createChargeeRouter } from "./routes/new";
 // import { createTicketRouter } from "./routes/new";
 // import { showTicketRouter } from "./routes/show";
 // import { indexTicketRouter } from "./routes";
@@ -21,7 +22,7 @@ app.use(
   })
 );
 app.use(currentUser);
-// app.use(createTicketRouter);
+app.use(createChargeeRouter);
 // app.use(showTicketRouter);
 // app.use(indexTicketRouter);
 // app.use(UpdateRouter);

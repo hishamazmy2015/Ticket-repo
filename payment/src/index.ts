@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import { app } from "./app";
-// import { OrderCancelledListener } from "./events/listener/order-cancelled-listener";
-// import { OrderCreatedListener } from "./events/listener/order-created-listener";
+import { orderCancelledListener } from "./events/listeners/order-cancelled-listener";
+import { orderCreatedListener } from "./events/listeners/order-created-listener";
+import { PaymentCreatedPublisher } from "./events/publisher/create-payment-publisher";
 import { natsWrapper } from "./nats-wrapper";
 
 const start = async () => {
@@ -28,7 +29,7 @@ const start = async () => {
       process.env.NATS_CLIENT_ID,
       process.env.NATS_URL
     );
-    await natsWrapper.connect("ticketing", "lassfes", "http://nats-srv:4222");
+    // await natsWrapper.connect("ticketing", "lassfes", "http://nats-srv:4222");
     natsWrapper.client.on("close", () => {
       console.log("NATS connections closed");
       process.exit();
@@ -36,18 +37,18 @@ const start = async () => {
     process.on("SIGINT", () => natsWrapper.client.close);
     process.on("SIGTERM", () => natsWrapper.client.close);
 
-    // new OrderCreatedListener(natsWrapper.client).listen();
-    // new OrderCancelledListener(natsWrapper.client).listen();
+    new orderCreatedListener(natsWrapper.client).listen();
+    new orderCancelledListener(natsWrapper.client).listen();
 
     mongoose.connect(process.env.MONGO_URI);
     // await mongoose.connect(process.env.MONGO_URI);
-    console.log("Connected To Mongo For Ticket DB");
+    console.log("Connected To Mongo For Payment DB");
   } catch (err) {
     console.log("err", err);
   }
   app.listen(4003, () => {
     console.log(
-      "====================== Listening TICKET SRV on Port 4003 ====================== "
+      "====================== Listening Payment SRV on Port 4003 ====================== "
     );
   });
 };

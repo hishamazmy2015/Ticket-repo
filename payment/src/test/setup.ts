@@ -3,7 +3,9 @@ import { app } from "../app";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import request from "supertest";
 import jwt from "jsonwebtoken";
-let mongo: any;
+import { stripe } from "../stripe";
+
+// jest.mock("../stripe");
 
 declare global {
   function singUp(): Promise<string[]>;
@@ -11,11 +13,14 @@ declare global {
   // function signin(): string[];
   // function signin(): Promise<string[]>;
   // function signin(): Promise<string>;
-  function signin(): string[];
+  function signin(id?: string): string[];
 }
 // all tests use mock of nats wrapper before tests
-jest.mock('../nats-wrapper');
+jest.mock("../nats-wrapper");
+// process.env.STRIPE_KEY! =
+//   "Bearer sk_test_51LOkuvFEfrboxi6lmhQ5QfA1IvqV0WlzaModLM2d1aeDudjYDnqN4GO6GpectVSBrtrbEtQgI6UgSiqR14iiLzbJ00qipWTxZH";
 
+let mongo: any;
 beforeAll(async () => {
   process.env.JWT_KEY = "adsf";
   mongo = await MongoMemoryServer.create();
@@ -28,7 +33,7 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
-  jest.clearAllMocks()
+  jest.clearAllMocks();
   const collections = await mongoose.connection.db.collections();
   for (let collection of collections) {
     await collection.deleteMany({});
@@ -52,13 +57,13 @@ global.singUp = async () => {
   return cookie;
 };
 
-global.signin = () => {
+global.signin = (id?: string) => {
   // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjkyYjYxNzBjYTM2NTgxZTFlYjBmOSIsImVtYWlsIjoiaGlkaGZpaGlAZ21haWwuY29tIiwiaWF0IjoxNjU2MzAyNDMzfQ.74GyFm5_cSLnNnS-pm9LdKUIjR9U_nOOno_PcVd1e2U
 
   //Build a JWT payload {id, email}
   const payload = {
     // id: "1L1234k56",
-    id: new mongoose.Types.ObjectId().toHexString(),
+    id: id || new mongoose.Types.ObjectId().toHexString(),
     email: "test1234@gmail.com",
   };
 
